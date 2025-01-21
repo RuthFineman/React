@@ -11,6 +11,7 @@ export type UserContextType = {
 export const UserContext = createContext<UserContextType | null>(null);
 const Homee=()=>{
     const initialUser: User = {
+      id: "",
         firstName: "Ruti",
         lastName: "",
         mail: "",
@@ -20,10 +21,12 @@ const Homee=()=>{
       }
       const [user, userDispatch] = useReducer(userRaducer, initialUser)
       const [LoginSuccess, setLoginSuccess] = useState(false);
+  
+      
       const loginSuccessful = () => {
         setLoginSuccess(true);
       };
-    
+
       return (<>
     <Container maxWidth="sm"></Container>
         <Box
@@ -36,11 +39,12 @@ const Homee=()=>{
           }}>
           <UserContext.Provider value={{ user, userDispatch }}>
             {LoginSuccess === false && <Login onLoginSuccess={loginSuccessful}></Login>}
-            {LoginSuccess ===true&& <UserName></UserName>}
+            {LoginSuccess ===true && <UserName></UserName>}
             <div></div>
             {LoginSuccess && <Update></Update>}
           </UserContext.Provider>
         </Box>
+
       </>)
 }
 export default Homee

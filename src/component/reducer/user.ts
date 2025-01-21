@@ -1,4 +1,5 @@
 export type User = {
+    id?: string,
     firstName: string,
     lastName: string,
     mail: string,
@@ -12,30 +13,39 @@ type Action = {
     //מכיל את היוזר החדש
     data: Partial<User>
 }
-
 export const userRaducer = (state: User, action: Action): User => {
     switch (action.type) {
-        case 'CREATE':
-            const { firstName, password } = action.data as Partial<User>
+        case 'CREATE': {
+            // בדיקה האם action.data מוגדר ואינו אובייקט ריק
+            if (!action.data || Object.keys(action.data).length === 0) {
+                console.error('CREATE action requires non-empty data.');
+                return state; // מחזיר את המצב הנוכחי אם אין נתונים
+            }
+            const { id, firstName, password } = action.data;
             return {
+                id: id || '',
                 firstName: firstName || '',
-                lastName: '', mail: '',
+                lastName: '',
+                mail: '',
                 password: password || '',
-                address: '', phone: ''
+                address: '',
+                phone: ''
+            };
+        }
+        case 'UPDATE': {
+            if (!action.data || Object.keys(action.data).length === 0) {
+                console.error('UPDATE action requires non-empty data.');
+                return state;
             }
-        case 'UPDATE':
             return {
-                firstName: state.firstName,
-                lastName: action.data.lastName || state.lastName,
-                password: state.password,
-                mail: action.data.mail || state.mail,
-                address: action.data.address || state.address,
-                phone: action.data.phone || state.phone,
-            }
+                ...state,
+                ...action.data,
+            };
+        }
         default:
             return state;
     }
-}
+};
 
 
 
