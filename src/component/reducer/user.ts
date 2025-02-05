@@ -1,5 +1,5 @@
 export type User = {
-    id?: string,
+    id?: number,
     firstName: string,
     lastName: string,
     mail: string,
@@ -10,20 +10,18 @@ export type User = {
 
 type Action = {
     type: 'CREATE' | 'UPDATE' | 'POP' | 'REMOVE',
-    //מכיל את היוזר החדש
     data: Partial<User>
 }
 export const userRaducer = (state: User, action: Action): User => {
     switch (action.type) {
         case 'CREATE': {
-            // בדיקה האם action.data מוגדר ואינו אובייקט ריק
             if (!action.data || Object.keys(action.data).length === 0) {
                 console.error('CREATE action requires non-empty data.');
-                return state; // מחזיר את המצב הנוכחי אם אין נתונים
+                return state;
             }
             const { id, firstName, password } = action.data;
             return {
-                id: id || '',
+                id: id || 0,
                 firstName: firstName || '',
                 lastName: '',
                 mail: '',

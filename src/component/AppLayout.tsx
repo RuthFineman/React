@@ -1,16 +1,10 @@
-import NavBar from "./NavBar"
-import { Outlet } from "react-router"
+import Homee from "./Homee";
+
 const AppLayot = () => {
-
-
     return (<>
-
         <div>
-            <div><NavBar /></div>
-            <div></div>
-            <div><Outlet /></div>
+            <Homee></Homee>
         </div>
-
     </>)
 }
 export default AppLayot
